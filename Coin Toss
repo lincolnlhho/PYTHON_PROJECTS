@@ -1,0 +1,54 @@
+from random import random
+import numpy as np
+from random import seed
+from random import randint
+
+def coin():
+    toss = randint(0,1)
+    global heads, tails
+    if toss == 0:
+        tails = 1
+        heads = 0
+        #print('tails')
+    else:
+        heads = 1
+        tails = 0
+        #print('heads')
+        
+def experiment():
+    global total, row
+    row = 0
+    total = 0
+    while row <3:
+        coin()
+        total = total +1
+        
+        if heads == 1:
+            row = row + 1
+        elif tails == 1:
+            row = 0
+    return total
+
+def main():
+    global times, Total, heads , tails, total, row
+    times = 0
+    Total = 0
+    for i in range(10):
+        heads= 0
+        tails = 0
+        total = 0
+        row = 0
+        experiment()
+        times = times + 1
+        Total = Total + total
+        
+    print(Total/10)
+    
+heads= 0
+tails = 0
+total = 0
+row = 0
+times = 0
+Total = 0
+
+main()
