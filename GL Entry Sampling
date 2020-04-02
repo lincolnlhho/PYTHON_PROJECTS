@@ -1,0 +1,83 @@
+from tkinter import*
+import pandas as pd
+import numpy as np
+from numpy import *
+import random
+from tkinter import messagebox
+
+
+root = Tk()
+root.title('Random Testing Generator')
+df = Frame(root)
+df.pack()
+
+label1 = Label(df, text = "Input file name:")
+label2 = Label(df, text = "Input sheet name:")
+label3 = Label(df, text = "Input attributes to be tested:")
+label4 = Label(df, text = "Number of testings wanted:")
+label5 = Label(df, text = "Output file name:")
+label1.grid(row=0, sticky=E)
+label2.grid(row=1, sticky=E)
+label3.grid(row=2, sticky=E)
+label4.grid(row=3, sticky=E)
+label5.grid(row=4, sticky=E)
+
+file_name = Entry(df)
+sheet_name = Entry(df)
+attributes = Entry(df)
+no_test = Entry(df)
+output_file = Entry(df)
+
+file_name.grid(row=0, column=1)
+sheet_name.grid(row=1, column=1)
+attributes.grid(row=2, column=1)
+no_test.grid(row=3, column=1)
+output_file.grid(row=4, column=1)
+
+def test():
+    try:
+        input_file = file_name.get()
+        rows_wanted = attributes.get()
+        no_wanted = no_test.get()
+        output_name = output_file.get()
+        sheet = sheet_name.get()
+
+        #int(rows_wanted.split(','))
+
+
+        #building dataframe with useful data
+        excel = pd.read_excel(str(input_file),str(sheet),index = False,index_label = False, na_values = [''])
+        rows_wanted = rows_wanted.split(',')
+        for x in range(len(rows_wanted)):
+            rows_wanted[x] = int(rows_wanted[x])
+        excel_header = excel[0:1]
+        excel_header = excel[rows_wanted]
+        excel_data = excel[1:len(excel)]
+        excel_data = excel_data[rows_wanted]
+
+
+
+        no_wanted = int(no_wanted)
+
+    #Shuffling data and extracting to excel
+        excel_data = excel_data.sample(frac=1)
+        excel_data = excel_data[0:(int(no_wanted))]
+
+        frame = [excel_header, excel_data]
+        um = pd.concat(frame)
+
+        um.to_excel(str(output_name) + '.xlsx',index = False, header = False)
+    except:
+        messagebox.showerror("Error", "An error occured, please check if file is the correctly formatted and placed in the same folder with application")
+        root.update()
+        return
+
+var = Intvar()
+checkbox = Checkbutton(top, text="Targeted Testing?", variable = var)
+checkbox.grid(columnspan=2, row=3)
+    
+button = Button(df, text="Submit", fg="red", command=test)
+#button = Button(root, text='Click ME', command=___)
+button.grid(row=4, column=1)
+    
+root.mainloop()
