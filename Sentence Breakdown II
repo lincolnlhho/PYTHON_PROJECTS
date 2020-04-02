@@ -1,0 +1,47 @@
+sentence = input('Please enter a sectence (including numbers): ')
+
+
+
+sentence_list = list(sentence)
+
+numbers = []
+blank_numbers = []
+letters = []
+blank_letters = []
+
+for i in range(len(sentence_list)):
+    if sentence_list[i].isalpha() == True:
+        letters.append(i)
+        blank_letters.append('-')
+    
+    elif ((sentence_list[i] >= 'a' and sentence_list[i] <= 'z') or (sentence_list[i] >= 'A' and sentence_list[i] <= 'Z') or (sentence_list[i] >= '0' and sentence_list[i] <= '9')) == True:
+        blank_letters.append(sentence_list[i])
+        
+        
+for i in range(len(sentence_list)):
+    if sentence_list[i].isdigit() == True:
+        numbers.append(i)
+        blank_numbers.append('-')
+        
+    elif ((sentence_list[i] >= 'a' and sentence_list[i] <= 'z') or (sentence_list[i] >= 'A' and sentence_list[i] <= 'Z') or (sentence_list[i] >= '0' and sentence_list[i] <= '9')) == True:
+        blank_numbers.append(sentence_list[i])
+        
+        
+        
+        
+if ('-' not in blank_numbers) == True:
+    blank_numbers = 'None'
+    
+if ('-' not in blank_letters) == True:
+    blank_letters = 'None'
+    
+print('Here is the sentence breakdown: \n \nLETTERS:')
+print(*blank_letters, sep = '')
+print('Letters occur at the following positions:')
+print(*letters, sep =' ')
+
+
+print('NUMBERS:')
+print(*blank_numbers, sep = '')
+print('Numbers occur at the following positions:')
+print(*numbers, sep =' ')
