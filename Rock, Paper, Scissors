@@ -1,0 +1,120 @@
+import random
+ties= 0
+computerWins = 0
+userWins = 0
+
+def displayMenu():
+    print("Welcome! Let's play rock, paper, scissors.")
+    print('The rules of the game are:')
+    print('\tRock smashes scissors')
+    print('\tScissors cut paper')
+    print('\tPaper covers rock')
+    print("\tIf both the choices are the same, it's a tie")
+    print('Please choose (0) for rock, (1) for paper or (2) for scissors')
+
+def getPlayerChoice():
+    while True:
+        choice= input('')
+        if choice=='0':
+            print('You chose Rock.')
+            return int(choice)
+            break
+        elif choice=='1':
+            print('You chose Paper.')
+            return int(choice)
+            break
+        elif choice=='2':
+            print('You chose Scissors.')
+            return int(choice)
+            break
+        else:
+            print('Invalid choice.  Please choose (0) for rock, (1) for paper or (2) for scissors')
+            
+        
+
+
+def getComputerChoice():
+    num=random.randrange(0,3)
+    if num==0:
+        print('The computer chose Rock.')
+    elif num==1:
+        print('The computer chose Paper.')
+    elif num==2:
+        print('The computer chose Scissors.')
+    return num
+
+def playRound(x,y):
+    difference=x - y
+    global num, ties, userWins, computerWins
+    if difference==0:
+        print("It's a tie!")
+        ties= ties + 1
+        continueGame()
+    elif difference==1:
+        if x==1 and y==0:
+            print('Paper covers rock.  Computer wins!')
+            computerWins= computerWins + 1
+            continueGame()
+        elif x==2 and y==1:
+            print('Scissors cut paper.  Computer wins!')
+            computerWins= computerWins + 1
+            continueGame()
+    elif difference==-1:
+        if x==0 and y==1:
+            print('Paper covers rock.  You win!')
+            userWins= userWins + 1
+            continueGame()
+        elif x==1 and y==2:
+            print('Scissors cut paper.  You win!')
+            userWins= userWins + 1
+            continueGame()
+    elif difference==2:
+        print('Rock smashes scissors.  You win!')
+        userWins= userWins + 1
+        continueGame()
+    elif difference== -2:
+        print('Rock smashes scissors.  Computer wins!')
+        userWins= userWins + 1
+        continueGame()
+
+
+def continueGame():
+    wantsToContinue= True
+    global userWins, computerWins, ties
+    while True:
+        goAgain=input('Do you want to continue playing (y or n)?')
+        
+        if goAgain.lower()=='y':
+            main()
+            break
+
+            
+        elif goAgain.lower()=='n':
+            wantsToContinue=False
+            print('You won',int(userWins), 'game(s)')
+            print('The computer won',int(computerWins), 'game(s)')
+            print('You tied with the computer',int(ties), 'time(s)')
+            
+            break
+            quit()
+            exit()
+        
+        else:
+            print('Invalid choice. Do you want to continue playing (y or n)?')
+
+
+
+
+def main():
+    
+    ties = 0
+    computerWins = 0
+    userWins = 0
+    
+    displayMenu()
+    choice= getPlayerChoice()
+    num= getComputerChoice()
+    playRound(num, choice)
+
+
+main()
