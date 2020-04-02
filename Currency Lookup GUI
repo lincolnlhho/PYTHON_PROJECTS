@@ -1,0 +1,194 @@
+
+# coding: utf-8
+
+# In[1]:
+
+
+from tkinter import*
+import pandas as pd
+import numpy as np
+from numpy import *
+
+
+
+
+root = Tk()
+
+top = Frame(root)
+top.pack()
+bottom = Frame(root)
+bottom.pack(side=BOTTOM)
+
+
+menu_hkd = pd.read_excel('Menu.xlsx',"hkd", header=None, index=False, index_label=None)
+menu_usd = pd.read_excel('Menu.xlsx',"usd", header=None, index=False, index_label=None)
+menu_cny = pd.read_excel('Menu.xlsx',"cny", header=None, index=False, index_label=None)
+menu_gbp = pd.read_excel('Menu.xlsx',"gbp", header=None, index=False, index_label=None)
+Jan = pd.read_excel("012018.xlsx","HKD Value", skiprows=5)
+Feb = pd.read_excel("022018.xlsx","HKD Value", skiprows=5)
+Mar = pd.read_excel("032018.xlsx","HKD Value", skiprows=5)
+Apr = pd.read_excel("042018.xlsx","HKD Value", skiprows=5)
+May = pd.read_excel("052018.xlsx","HKD Value", skiprows=5)
+Jun = pd.read_excel("062018.xlsx","HKD Value", skiprows=5)
+Jul = pd.read_excel("072018.xlsx","HKD Value", skiprows=5)
+Aug = pd.read_excel("082018.xlsx","HKD Value", skiprows=5)
+Sep = pd.read_excel("092018.xlsx","HKD Value", skiprows=5)
+Oct = pd.read_excel("102018.xlsx","HKD Value", skiprows=5)
+Nov = pd.read_excel("112018.xlsx","HKD Value", skiprows=5)
+Dec = pd.read_excel("122018.xlsx","HKD Value", skiprows=5)
+
+            
+
+Jan1 = pd.read_excel("012018.xlsx","USD Value", skiprows=5)
+Feb1 = pd.read_excel("022018.xlsx","USD Value", skiprows=5)
+Mar1 = pd.read_excel("032018.xlsx","USD Value", skiprows=5)
+Apr1 = pd.read_excel("042018.xlsx","USD Value", skiprows=5)
+May1 = pd.read_excel("052018.xlsx","USD Value", skiprows=5)
+Jun1 = pd.read_excel("062018.xlsx","USD Value", skiprows=5)
+Jul1 = pd.read_excel("072018.xlsx","USD Value", skiprows=5)
+Aug1 = pd.read_excel("082018.xlsx","USD Value", skiprows=5)
+Sep1 = pd.read_excel("092018.xlsx","USD Value", skiprows=5)
+Oct1 = pd.read_excel("102018.xlsx","USD Value", skiprows=5)
+Nov1 = pd.read_excel("112018.xlsx","USD Value", skiprows=5)
+Dec1 = pd.read_excel("122018.xlsx","USD Value", skiprows=5)
+
+
+
+Jan2 = pd.read_excel("012018.xlsx","CNY Value", skiprows=5)
+Feb2 = pd.read_excel("022018.xlsx","CNY Value", skiprows=5)
+Mar2 = pd.read_excel("032018.xlsx","CNY Value", skiprows=5)
+Apr2 = pd.read_excel("042018.xlsx","CNY Value", skiprows=5)
+May2 = pd.read_excel("052018.xlsx","CNY Value", skiprows=5)
+Jun2 = pd.read_excel("062018.xlsx","CNY Value", skiprows=5)
+Jul2 = pd.read_excel("072018.xlsx","CNY Value", skiprows=5)
+Aug2 = pd.read_excel("082018.xlsx","CNY Value", skiprows=5)
+Sep2 = pd.read_excel("092018.xlsx","CNY Value", skiprows=5)
+Oct2 = pd.read_excel("102018.xlsx","CNY Value", skiprows=5)
+Nov2 = pd.read_excel("112018.xlsx","CNY Value", skiprows=5)
+Dec2 = pd.read_excel("122018.xlsx","CNY Value", skiprows=5)
+
+    
+
+Jan3 = pd.read_excel("012018.xlsx","GBP Value", skiprows=5)
+Feb3 = pd.read_excel("022018.xlsx","GBP Value", skiprows=5)
+Mar3 = pd.read_excel("032018.xlsx","GBP Value", skiprows=5)
+Apr3 = pd.read_excel("042018.xlsx","GBP Value", skiprows=5)
+May3 = pd.read_excel("052018.xlsx","GBP Value", skiprows=5)
+Jun3 = pd.read_excel("062018.xlsx","GBP Value", skiprows=5)
+Jul3 = pd.read_excel("072018.xlsx","GBP Value", skiprows=5)
+Aug3 = pd.read_excel("082018.xlsx","GBP Value", skiprows=5)
+Sep3 = pd.read_excel("092018.xlsx","GBP Value", skiprows=5)
+Oct3 = pd.read_excel("102018.xlsx","GBP Value", skiprows=5)
+Nov3 = pd.read_excel("112018.xlsx","GBP Value", skiprows=5)
+Dec3 = pd.read_excel("122018.xlsx","GBP Value", skiprows=5)
+
+def submit():
+    ask_base = Base_entry.get()
+    ask_currency = Currency_entry.get()
+    ask_month = ask_month_entry.get()
+    ask_date = var.get() #yes1, no0
+    date_str = date_input.get()
+    
+    if ask_base == 'usd' or ask_base == 'USD':
+        year_list = [Jan1, Feb1, Mar1, Apr1, May1, Jun1, Jul1, Aug1, Sep1, Oct1, Nov1, Dec1]
+        menu = menu_usd
+    elif ask_base == 'hkd' or ask_base == 'HKD':
+        year_list = [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+        menu = menu_hkd
+    elif ask_base == 'cny' or ask_base == 'CNY':
+        year_list = [Jan2, Feb2, Mar2, Apr2, May2, Jun2, Jul2, Aug2, Sep2, Oct2, Nov2, Dec2]
+        menu = menu_cny
+    elif ask_base == 'gbp' or ask_base == 'GBP':
+        year_list = [Jan3, Feb3, Mar3, Apr3, May3, Jun3, Jul3, Aug3, Sep3, Oct3, Nov3, Dec3]
+        menu = menu_gbp
+    else:
+        print('No such Base Currency.')
+        exit()
+        
+    base_menu = ['']*35   
+        
+    for x in range(35):
+        base_menu[x] = menu[0][x]
+    
+    empty_yr = [np.zeros((35,31)), np.zeros((35,31)), np.zeros((35,31)), np.zeros((35,31)), np.zeros((35,31)), np.zeros((35,31)), np.zeros((35,31)), np.zeros((35,31)), np.zeros((35,31)), np.zeros((35,31)), np.zeros((35,31)), np.zeros((35,31))]
+    transpose = [np.zeros((35,33)), np.zeros((35,33)), np.zeros((35,33)), np.zeros((35,33)), np.zeros((35,33)), np.zeros((35,33)), np.zeros((35,33)), np.zeros((35,33)), np.zeros((35,33)), np.zeros((35,33)), np.zeros((35,33)), np.zeros((35,33))]
+
+    for x in range(12):
+        transpose[x] = np.transpose(year_list[x])
+        empty_yr[x] = transpose[x][2:35]
+    
+    def average(lst): 
+        return sum(lst) / sum(x > 0 for x in (lst))
+
+    #set nan to 0
+    for x in empty_yr:
+        if type(x) == type(str):
+            x == int('0')
+            
+    currency = base_menu.index(str(ask_currency))
+    month = int(ask_month) -1
+
+    if ask_date == int('0'):
+        average_mth = average((empty_yr[month][currency]))
+        avg_output.set(str(average_mth))
+        date_output.set('0')
+        
+    else:
+        date_int = int(date_str) -1
+        date = empty_yr[month][currency][date_int]    
+        date_output.set(str(date))
+        avg_output.set('0')
+    
+    
+
+avg_output = StringVar()
+avg_output.set('0')
+date_output = StringVar()
+date_output.set('0')
+
+status = Label(bottom, text='Import Complete.',bd=1, relief = SUNKEN, anchor =W)
+status.pack(side= BOTTOM,fill=X)
+label1 = Label(top,  text="Input Base Currency:")
+label2 = Label(top , text="Input Currency wanted:")
+label3 = Label(top , text="Input Month wanted:")
+label4 = Label(top , text="Input Day wanted:")
+label5 = Label(top , text="Monthy Average=")
+label6 = Label(top , text="Rate for day=")
+
+label1.grid(row=0, sticky=E)
+label2.grid(row=1, sticky=E)
+label3.grid(row=2, sticky=E)
+label4.grid(row=4, sticky=E)
+label5.grid(row=7, sticky=E)
+label6.grid(row=8, sticky=E)
+
+
+label_avg = Label(top, textvariable= avg_output, bd =1)
+label_day = Label(top, textvariable= date_output, bd =1)
+label_avg.grid(row=7, column=1, sticky=W)
+label_day.grid(row=8, column=1, sticky=W)
+
+
+
+var = IntVar()
+
+Base_entry = Entry(top)
+Currency_entry = Entry(top)
+ask_month_entry = Entry(top)
+date_input = Entry(top)
+checkbox = Checkbutton(top, text="Are you looking for a specific day?", variable = var)
+
+
+Base_entry.grid(row=0, column=1)
+Currency_entry.grid(row=1, column=1)
+ask_month_entry.grid(row=2, column=1)
+checkbox.grid(columnspan=2, row=3)
+date_input.grid(row=4, column=1)
+
+
+button = Button(top, text="Submit", fg="red", command=submit)
+#button = Button(root, text='Click ME', command=___)
+button.grid(row=5, column=1)
+
+root.mainloop()
+
