@@ -3,6 +3,7 @@ import numpy as np
 from random import seed
 from random import randint
 
+
 def coin():
     toss = randint(0,1)
     global heads, tails
