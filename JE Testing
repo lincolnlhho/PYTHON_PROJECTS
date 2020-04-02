@@ -1,0 +1,27 @@
+import pandas as pd
+
+GL = pd.read_excel('Excel Elite.xlsx','Sheet1', header = None)
+invoiceList_ex = pd.read_excel('Excel Elite.xlsx','Sheet3',header = None)
+invoiceList = invoiceList_ex[0]
+
+allInv = GL[0]
+allCR = GL[4]
+allDB = GL[3]
+allAcc = GL[1]
+DB = 0
+count = 0
+#empty = [['',0]]*259
+for i in range(len(allInv)):
+    for x in invoiceList:
+        if allInv[i] == x:
+            if allCR[i] == int('0'):
+                if allDB[i] != int('0'):
+                    print(allInv[i], ",",allAcc[i])
+                    count +=1
+                    DB += allDB[i]
+                
+                        #empty[p][0] = allInv[i]
+                        #empty[p][1] = allAcc[i]
+                
+print(DB)                
+print(count)
