@@ -1,0 +1,45 @@
+import string
+import re
+
+#Splitting the sting into a list
+def split(word): 
+    return [char for char in word]
+
+#Input word
+word = input()
+word = word.lower()
+um= split(word)
+
+#Removes non-alphabetical charcters
+spec = re.sub('[a-z]', '', word)
+spec_um = split(spec)
+
+#returning a unique list of non-alphabetical charcters
+def my_function(x):
+  return list(dict.fromkeys(x))
+
+mylist = my_function(spec_um)
+
+#The loop that counts elements
+count = 0
+alphabets = string.ascii_lowercase
+
+#Counting non-alphabetical charcters
+for i in mylist:
+    for k in spec_um:
+        if i == k:
+            count = count +1
+    if count != 0:
+        print ("{}: ".format(i) + '*'*count)
+    count = 0
+
+#Counting alphabetical charcters
+for i in alphabets:
+    for k in um: 
+        if i == k: 
+            count = count + 1
+    if count != 0:
+        print ("{}: ".format(i) + '*'*count)
+    else:
+        print('{}: None'.format(i))
+    count = 0
